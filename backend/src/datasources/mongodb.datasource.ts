@@ -1,5 +1,9 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const DATASOURCE_STRING = process.env.DATASOURCE_STRING || '';
 
 const config = {
