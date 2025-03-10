@@ -25,15 +25,15 @@ export class TasksComponent {
 
   ConstruirFormularios() {
     this.fGroup = this.fb.group({
-      title: ['', [Validators.required]],
+      title: ['', [Validators.required, Validators.minLength(4)]],
       category: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      description: ['', [Validators.minLength(4)]],
     });
 
     this.editGroup = this.fb.group({
-      title: ['', [Validators.required]],
+      title: ['', [Validators.required, Validators.minLength(4)]],
       category: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      description: ['', [Validators.minLength(4)]],
       status: ['', [Validators.required]],
     });
   }
@@ -99,6 +99,10 @@ export class TasksComponent {
 
   get ObtenerFormGroup() {
     return this.fGroup.controls;
+  }
+
+  get ObtenerEditGroup() {
+    return this.editGroup.controls;
   }
 
   editTask(task: TaskModel) {

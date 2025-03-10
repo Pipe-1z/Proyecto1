@@ -7,11 +7,20 @@
             <form [formGroup]="fGroup" class="px-5 mx-5 mb-5">
                 <div class="form-group">
                     <input formControlName="title" id="title" type="text" class="form-control form-control-lg"
-                        placeholder="Título">
+                        placeholder="Título"
+                        [ngClass]="{'is-invalid': ObtenerFormGroup['title'].invalid && (ObtenerFormGroup['title'].dirty || ObtenerFormGroup['title'].touched), 'is-valid': ObtenerFormGroup['title'].valid && (ObtenerFormGroup['title'].dirty || ObtenerFormGroup['title'].touched)}">
+                    <div *ngIf="ObtenerFormGroup['title'].invalid && (ObtenerFormGroup['title'].dirty || ObtenerFormGroup['title'].touched)"
+                        class="text-danger">
+                        <div *ngIf="ObtenerFormGroup['title'].errors?.['required']">El título es requerido.</div>
+                        <div *ngIf="ObtenerFormGroup['title'].errors?.['minlength']">El título debe tener al menos 4
+                            caracteres.
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="form-group">
-                    <select formControlName="category" id="category" class="form-control custom-select form-control-lg">
+                    <select formControlName="category" id="category" class="form-control custom-select form-control-lg"
+                        [ngClass]="{'is-invalid': ObtenerFormGroup['category'].invalid && (ObtenerFormGroup['category'].dirty || ObtenerFormGroup['category'].touched), 'is-valid': ObtenerFormGroup['category'].valid && (ObtenerFormGroup['category'].dirty || ObtenerFormGroup['category'].touched)}">
                         <option value="" disabled selected>Elige categoría</option>
                         <option value="Trabajo">Trabajo</option>
                         <option value="Personal">Personal</option>
@@ -24,11 +33,22 @@
                         <option value="Urgente">Urgente</option>
                         <option value="Tarea en casa">Tarea en casa</option>
                     </select>
+                    <div *ngIf="ObtenerFormGroup['category'].invalid && (ObtenerFormGroup['category'].dirty || ObtenerFormGroup['category'].touched)"
+                        class="text-danger">
+                        <div *ngIf="ObtenerFormGroup['category'].errors?.['required']">La categoría es requerida.</div>
+                    </div>
                 </div>
                 <br>
                 <div class="form-group">
                     <textarea formControlName="description" id="description" class="form-control form-control-lg mb-5"
-                        aria-label="With textarea" placeholder="Descripción"></textarea>
+                        aria-label="With textarea" placeholder="Descripción (opcional)"
+                        [ngClass]="{'is-invalid': ObtenerFormGroup['description'].invalid && (ObtenerFormGroup['description'].dirty || ObtenerFormGroup['description'].touched), 'is-valid': ObtenerFormGroup['description'].valid && (ObtenerFormGroup['description'].dirty || ObtenerFormGroup['description'].touched)}"></textarea>
+                    <div *ngIf="ObtenerFormGroup['description'].invalid && (ObtenerFormGroup['description'].dirty || ObtenerFormGroup['description'].touched)"
+                        class="text-danger">
+                        <div *ngIf="ObtenerFormGroup['description'].errors?.['minlength']">La descripción debe tener al
+                            menos 4
+                            caracteres.</div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-dark btn-lg"
@@ -47,6 +67,7 @@
                     <th scope="col">Descripción</th>
                     <th scope="col">Estado</th>
                     <th scope="col"> </th>
+                    <th scope="col"> </th>
                 </tr>
             </thead>
             <tbody id="task-table">
@@ -54,12 +75,17 @@
                     <td>{{ task.titulo }}</td>
                     <td>{{ task.categoria }}</td>
                     <td class="text-wrap">
-                        {{ task.descripcion?.slice(0, 100) ?? '' }}<span *ngIf="(task.descripcion?.length ?? 0) > 100">...</span>
+                        {{ task.descripcion?.slice(0, 100) ?? '' }}<span
+                            *ngIf="(task.descripcion?.length ?? 0) > 100">...</span>
                     </td>
                     <td>{{ task.estado }}</td>
                     <td>
-                        <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="Editar" width="20"
-                            height="20" (click)="editTask(task)">
+                        <img class="action-icon" src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png"
+                            alt="Editar" width="20" height="20" (click)="editTask(task)">
+                    </td>
+                    <td>
+                        <img class="action-icon" src="https://cdn-icons-png.flaticon.com/128/1214/1214428.png"
+                            alt="Eliminar" width="20" height="20" (click)="deleteTask(task)">
                     </td>
                 </tr>
             </tbody>
@@ -79,11 +105,19 @@
             <p class="lead text-muted pb-3">Edita la tarea seleccionada.</p>
             <form [formGroup]="editGroup" class="px-5 mx-5 mb-5">
                 <div class="form-group">
-                    <input formControlName="title" type="text" class="form-control form-control-lg" placeholder="Título">
+                    <input formControlName="title" type="text" class="form-control form-control-lg" placeholder="Título"
+                        [ngClass]="{'is-invalid': ObtenerEditGroup['title'].invalid && (ObtenerEditGroup['title'].dirty || ObtenerEditGroup['title'].touched), 'is-valid': ObtenerEditGroup['title'].valid && (ObtenerEditGroup['title'].dirty || ObtenerEditGroup['title'].touched)}">
+                    <div *ngIf="ObtenerEditGroup['title'].invalid && (ObtenerEditGroup['title'].dirty || ObtenerEditGroup['title'].touched)"
+                        class="text-danger">
+                        <div *ngIf="ObtenerEditGroup['title'].errors?.['required']">El título es requerido.</div>
+                        <div *ngIf="ObtenerEditGroup['title'].errors?.['minlength']">El título debe tener al menos 4 caracteres.
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="form-group">
-                    <select formControlName="category" class="form-control custom-select form-control-lg">
+                    <select formControlName="category" class="form-control custom-select form-control-lg"
+                        [ngClass]="{'is-invalid': ObtenerEditGroup['category'].invalid && (ObtenerEditGroup['category'].dirty || ObtenerEditGroup['category'].touched), 'is-valid': ObtenerEditGroup['category'].valid && (ObtenerEditGroup['category'].dirty || ObtenerEditGroup['category'].touched)}">
                         <option value="" disabled selected>Elige categoría</option>
                         <option value="Trabajo">Trabajo</option>
                         <option value="Personal">Personal</option>
@@ -96,24 +130,37 @@
                         <option value="Urgente">Urgente</option>
                         <option value="Tarea en casa">Tarea en casa</option>
                     </select>
+                    <div *ngIf="ObtenerEditGroup['category'].invalid && (ObtenerEditGroup['category'].dirty || ObtenerEditGroup['category'].touched)"
+                        class="text-danger">
+                        <div *ngIf="ObtenerEditGroup['category'].errors?.['required']">La categoría es requerida.</div>
+                    </div>
                 </div>
                 <br>
                 <div class="form-group">
                     <textarea formControlName="description" class="form-control form-control-lg mb-4"
-                        placeholder="Descripción"></textarea>
+                        placeholder="Descripción (opcional)"
+                        [ngClass]="{'is-invalid': ObtenerEditGroup['description'].invalid && (ObtenerEditGroup['description'].dirty || ObtenerEditGroup['description'].touched), 'is-valid': ObtenerEditGroup['description'].valid && (ObtenerEditGroup['description'].dirty || ObtenerEditGroup['description'].touched)}"></textarea>
+                    <div *ngIf="ObtenerEditGroup['description'].invalid && (ObtenerEditGroup['description'].dirty || ObtenerEditGroup['description'].touched)"
+                        class="text-danger">
+                        <div *ngIf="ObtenerEditGroup['description'].errors?.['minlength']">La descripción debe tener al menos 4
+                            caracteres.</div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <select formControlName="status" class="form-control custom-select form-control-lg mb-4">
+                    <select formControlName="status" class="form-control custom-select form-control-lg mb-4"
+                        [ngClass]="{'is-invalid': ObtenerEditGroup['status'].invalid && (ObtenerEditGroup['status'].dirty || ObtenerEditGroup['status'].touched), 'is-valid': ObtenerEditGroup['status'].valid && (ObtenerEditGroup['status'].dirty || ObtenerEditGroup['status'].touched)}">
                         <option value="" disabled selected>Selecciona estado</option>
                         <option value="Pendiente">Pendiente</option>
                         <option value="Completada">Completada</option>
                         <option value="Cancelada">Cancelada</option>
                         <option value="En proceso">En proceso</option>
                     </select>
+                    <div *ngIf="ObtenerEditGroup['status'].invalid && (ObtenerEditGroup['status'].dirty || ObtenerEditGroup['status'].touched)"
+                        class="text-danger">
+                        <div *ngIf="ObtenerEditGroup['status'].errors?.['required']">El estado es requerido.</div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-danger btn-lg mx-5"
-                        (click)="deleteTask(selectedTask)"><strong>Eliminar</strong></button>
                     <button type="button" class="btn btn-dark btn-lg" (click)="applyEdit()"><strong>Aplicar</strong></button>
                 </div>
             </form>

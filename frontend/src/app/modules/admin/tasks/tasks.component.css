@@ -4,10 +4,13 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1050; /* Asegúrate de que el z-index sea mayor que el del contenido subyacente */
-    width: 80%; /* Ajusta el ancho según tus necesidades */
-    background-color: white; /* Asegúrate de que el fondo sea blanco para que se vea bien sobre el contenido */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añade una sombra para darle un efecto de sobreposición */
-    padding: 20px; /* Añade padding para darle espacio interno */
-    border-radius: 8px; /* Añade bordes redondeados */
+    z-index: 1050; 
+    width: 80%; 
+    background-color: white; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 20px; 
+    border-radius: 8px; 
+}
+.action-icon {
+    cursor: pointer;
 }
