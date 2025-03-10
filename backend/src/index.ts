@@ -30,6 +30,11 @@ if (require.main === module) {
         // useful when used with OpenAPI-to-GraphQL to locate your application
         setServersFromRequest: true,
       },
+      cors: {
+        origin: ['http://localhost:4200', 'http://localhost'], // Permitir Angular local
+        methods: 'GET,POST,PUT,DELETE,OPTIONS',
+        allowedHeaders: 'Content-Type,Authorization',
+      },
     },
   };
   main(config).catch(err => {
