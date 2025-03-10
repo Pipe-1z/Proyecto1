@@ -55,6 +55,7 @@
     "@loopback/rest": "^14.0.11",
     "@loopback/rest-explorer": "^7.0.11",
     "@loopback/service-proxy": "^7.0.11",
+    "class-validator": "^0.14.1",
     "dotenv": "^16.4.7",
     "loopback-connector-mongodb": "^6.2.0",
     "mongodb": "3.7",

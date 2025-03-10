@@ -1,4 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
+import {validate, Length} from 'class-validator';
 
 @model()
 export class Tarea extends Entity {
@@ -13,11 +14,13 @@ export class Tarea extends Entity {
     type: 'string',
     required: true,
   })
+  @Length(4, 255, {message: 'El título debe tener al menos 4 caracteres.'})
   titulo: string;
 
   @property({
     type: 'string',
   })
+  @Length(4, 255, {message: 'La descripción debe tener al menos 4 caracteres.'})
   descripcion?: string;
 
   @property({
@@ -31,7 +34,6 @@ export class Tarea extends Entity {
     required: true,
   })
   estado: string;
-
 
   constructor(data?: Partial<Tarea>) {
     super(data);
