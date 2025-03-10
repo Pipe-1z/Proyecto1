@@ -21,7 +21,29 @@ export class AdminService {
     });
   }
 
-  getTasks(): Observable<TaskModel> {
-    return this.http.get<TaskModel>(`${this.urlBase}tarea`);
+  getTasks(): Observable<TaskModel[]> {
+    return this.http.get<TaskModel[]>(`${this.urlBase}tarea`);
+  }
+
+  deleteTask(id: string): Observable<TaskModel> {
+    return this.http.delete<TaskModel>(`${this.urlBase}tarea/${id}`);
+  }
+
+  patchTask(task: TaskModel): Observable<TaskModel> {
+    return this.http.patch<TaskModel>(`${this.urlBase}tarea/${task._id}`, {
+      titulo: task.titulo,
+      descripcion: task.descripcion,
+      categoria: task.categoria,
+      estado: task.estado
+    });
+  }
+
+  updateTask(task: TaskModel): Observable<TaskModel> {
+    return this.http.patch<TaskModel>(`${this.urlBase}tarea/${task._id}`, {
+      titulo: task.titulo,
+      descripcion: task.descripcion,
+      categoria: task.categoria,
+      estado: task.estado
+    });
   }
 }

@@ -6,29 +6,29 @@
                 para guardarla.</p>
             <form [formGroup]="fGroup" class="px-5 mx-5 mb-5">
                 <div class="form-group">
-                    <input formControlName="title" type="text" class="form-control form-control-lg" placeholder="Título"
-                        >
+                    <input formControlName="title" id="title" type="text" class="form-control form-control-lg"
+                        placeholder="Título">
                 </div>
                 <br>
                 <div class="form-group">
-                    <select formControlName="category" class="form-control custom-select form-control-lg">
+                    <select formControlName="category" id="category" class="form-control custom-select form-control-lg">
                         <option value="" disabled selected>Elige categoría</option>
-                        <option value="trabajo">Trabajo</option>
-                        <option value="personal">Personal</option>
-                        <option value="estudio">Estudio</option>
-                        <option value="salud">Salud</option>
-                        <option value="finanzas">Finanzas</option>
-                        <option value="compras">Compras</option>
-                        <option value="ocio">Ocio</option>
-                        <option value="viajes">Viajes</option>
-                        <option value="urgente">Urgente</option>
-                        <option value="tarea-en-casa">Tarea en casa</option>
+                        <option value="Trabajo">Trabajo</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Estudio">Estudio</option>
+                        <option value="Salud">Salud</option>
+                        <option value="Finanzas">Finanzas</option>
+                        <option value="Compras">Compras</option>
+                        <option value="Ocio">Ocio</option>
+                        <option value="Viajes">Viajes</option>
+                        <option value="Urgente">Urgente</option>
+                        <option value="Tarea en casa">Tarea en casa</option>
                     </select>
                 </div>
                 <br>
                 <div class="form-group">
-                    <textarea formControlName="description" class="form-control form-control-lg mb-5" aria-label="With textarea"
-                        placeholder="Descripción"></textarea>
+                    <textarea formControlName="description" id="description" class="form-control form-control-lg mb-5"
+                        aria-label="With textarea" placeholder="Descripción"></textarea>
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-dark btn-lg"
@@ -39,7 +39,7 @@
     </section>
 
     <section class="container px-5" *ngIf="tasks.length > 0">
-        <table class="table table-striped">
+        <table class="table table-striped table-responsive">
             <thead>
                 <tr>
                     <th scope="col">Título</th>
@@ -53,13 +53,70 @@
                 <tr *ngFor="let task of tasks">
                     <td>{{ task.titulo }}</td>
                     <td>{{ task.categoria }}</td>
-                    <td>{{ task.descripcion }}</td>
+                    <td class="text-wrap">
+                        {{ task.descripcion?.slice(0, 100) ?? '' }}<span *ngIf="(task.descripcion?.length ?? 0) > 100">...</span>
+                    </td>
                     <td>{{ task.estado }}</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" (click)="deleteTask(task)">Eliminar</button>
+                        <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="Editar" width="20"
+                            height="20" (click)="editTask(task)">
                     </td>
                 </tr>
             </tbody>
         </table>
     </section>
 </main>
+
+<div *ngIf="isEditCardVisible" class="card text-center mx-5 overlay-card">
+    <div class="card-header">
+        Editar
+        <button type="button" class="close" aria-label="Close" (click)="closeEditCard()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <section class="jumbotron text-center">
+        <div class="container pt-5">
+            <p class="lead text-muted pb-3">Edita la tarea seleccionada.</p>
+            <form [formGroup]="editGroup" class="px-5 mx-5 mb-5">
+                <div class="form-group">
+                    <input formControlName="title" type="text" class="form-control form-control-lg" placeholder="Título">
+                </div>
+                <br>
+                <div class="form-group">
+                    <select formControlName="category" class="form-control custom-select form-control-lg">
+                        <option value="" disabled selected>Elige categoría</option>
+                        <option value="Trabajo">Trabajo</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Estudio">Estudio</option>
+                        <option value="Salud">Salud</option>
+                        <option value="Finanzas">Finanzas</option>
+                        <option value="Compras">Compras</option>
+                        <option value="Ocio">Ocio</option>
+                        <option value="Viajes">Viajes</option>
+                        <option value="Urgente">Urgente</option>
+                        <option value="Tarea en casa">Tarea en casa</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group">
+                    <textarea formControlName="description" class="form-control form-control-lg mb-4"
+                        placeholder="Descripción"></textarea>
+                </div>
+                <div class="form-group">
+                    <select formControlName="status" class="form-control custom-select form-control-lg mb-4">
+                        <option value="" disabled selected>Selecciona estado</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Completada">Completada</option>
+                        <option value="Cancelada">Cancelada</option>
+                        <option value="En proceso">En proceso</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-lg mx-5"
+                        (click)="deleteTask(selectedTask)"><strong>Eliminar</strong></button>
+                    <button type="button" class="btn btn-dark btn-lg" (click)="applyEdit()"><strong>Aplicar</strong></button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
