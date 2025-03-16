@@ -45,7 +45,7 @@ export class TasksComponent {
 
     let title = this.ObtenerFormGroup['title'].value;
     let category = this.ObtenerFormGroup['category'].value;
-    let description = this.ObtenerFormGroup['description'].value;
+    let description = this.ObtenerFormGroup['description'].value || '';
 
     const newTask = {
       titulo: title,
@@ -55,13 +55,13 @@ export class TasksComponent {
     };
 
     this.adminService.postTask(newTask).subscribe({
-      next: (datos: TaskModel) => {},
+      next: (datos: TaskModel) => {
+        this.listTasks(); // Actualiza la lista de tareas
+      },
       error: (err) => {
-        console.log('error');
+        console.error('Error al agregar la tarea:', err);
       },
     });
-
-    this.listTasks();
   }
 
   deleteTask(task: TaskModel | null) {
