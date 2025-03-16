@@ -31,9 +31,10 @@ if (require.main === module) {
         setServersFromRequest: true,
       },
       cors: {
-        origin: ['http://localhost:4200', 'http://localhost'], // Permitir Angular local
-        methods: 'GET,POST,PUT,DELETE,OPTIONS',
-        allowedHeaders: 'Content-Type,Authorization',
+        origin: ['http://localhost:4200'], // Permitir Angular local
+        methods: 'GET,POST,PUT,DELETE,PATCH,OPTIONS',
+        allowedHeaders:
+          'Content-Type,Authorization',
       },
     },
   };
