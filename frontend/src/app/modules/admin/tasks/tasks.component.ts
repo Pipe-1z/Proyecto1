@@ -15,6 +15,7 @@ export class TasksComponent {
   editGroup: FormGroup = new FormGroup({});
   isEditCardVisible: boolean = false;
   selectedTask: TaskModel | null = null;
+  isProcessing: boolean = false;
 
   constructor(private adminService: AdminService, private fb: FormBuilder) {}
 
@@ -42,7 +43,7 @@ export class TasksComponent {
     if (this.fGroup.invalid) {
       return;
     }
-
+    this.isProcessing = true;
     let title = this.ObtenerFormGroup['title'].value;
     let category = this.ObtenerFormGroup['category'].value;
     let description = this.ObtenerFormGroup['description'].value || '';
@@ -56,9 +57,11 @@ export class TasksComponent {
 
     this.adminService.postTask(newTask).subscribe({
       next: (datos: TaskModel) => {
+        this.isProcessing = false;
         this.listTasks(); // Actualiza la lista de tareas
       },
       error: (err) => {
+        this.isProcessing = false;
         console.error('Error al agregar la tarea:', err);
       },
     });
@@ -124,6 +127,7 @@ export class TasksComponent {
   applyEdit() {
     if (this.editGroup.invalid || !this.selectedTask) return;
 
+    this.isProcessing = true;
     const updatedTask = {
       ...this.selectedTask,
       titulo: this.editGroup.value.title,
@@ -134,10 +138,14 @@ export class TasksComponent {
 
     this.adminService.updateTask(updatedTask).subscribe({
       next: () => {
+        this.isProcessing = false;
         this.closeEditCard();
         this.listTasks();
       },
-      error: () => console.log('error'),
+      error: () => {
+        console.log('error');
+        this.isProcessing = false;
+      },
     });
   }
 }

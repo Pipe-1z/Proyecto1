@@ -14,3 +14,9 @@
 .action-icon {
     cursor: pointer;
 }
+.btn-lg {
+    min-width: 180px; /* Ajusta este valor según el tamaño deseado */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
